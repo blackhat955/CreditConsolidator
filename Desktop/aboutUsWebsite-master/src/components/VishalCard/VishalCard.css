@@ -1,0 +1,54 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #f2f8fe;
+}
+
+.image-container {
+  flex: 0 0 auto; /* Do not allow image to grow */
+  margin-right: 20px;
+}
+
+.profile-image {
+  width: 150px; /* Adjust as needed */
+  height: 150px; /* Adjust as needed */
+  border-radius: 50%; /* Make it circular */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.info-container {
+  flex: 1; /* Allow text info to grow */
+}
+
+.title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1em;
+  color: #666;
+}
+
+.btn-primary {
+  color: black !important;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.social-icons a {
+  margin: 0 5px;
+  color: #333; /* Adjust icon color as needed */
+  font-size: 20px; /* Adjust icon size as needed */
+}

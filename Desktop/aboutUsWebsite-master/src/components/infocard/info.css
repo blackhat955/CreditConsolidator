@@ -1,0 +1,20 @@
+.container {
+    width: 100vw;
+    height: 15vh;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .image {
+    width: 100px; /* Adjust the width of the image as needed */
+    height: auto; /* Adjust the margin between image and text as needed */
+  }
+  
+  .text {
+    flex: 1;
+  }
+
+  .gand{
+    background-color: black;
+  }
+  
