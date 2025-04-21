@@ -37,4 +37,7 @@ export interface Payment {
   receiptId?: string;
 }
 
+
+
+
 export type PaymentMethod = 'bank_transfer' | 'debit_card' | 'apple_pay' | 'google_pay';

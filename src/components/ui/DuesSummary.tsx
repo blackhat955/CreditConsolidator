@@ -101,15 +101,29 @@ const DuesSummary: React.FC<DuesSummaryProps> = ({ cards }) => {
           </div>
         </div>
         
-        <div className="flex flex-col items-center justify-center min-h-64">
-          <div className="relative h-64 w-full">
-            <Doughnut data={chartData} options={chartOptions} />
-            <div className="absolute inset-0 flex items-center justify-center flex-col">
-              <p className="text-sm text-gray-500">Total</p>
-              <p className="text-xl font-bold text-gray-800">{formatCurrency(totalDue)}</p>
-            </div>
-          </div>
-        </div>
+        <div className="w-64 h-64 relative mx-auto">
+  <Doughnut
+    data={chartData}
+    options={{
+      cutout: '70%',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: 0, // No default padding from Chart.js
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    }}
+  />
+  <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
+    <p className="text-sm text-gray-500">Total Outstanding Amount</p>
+    <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalDue)}</p>
+  </div>
+</div>
+
       </div>
     </div>
   );
