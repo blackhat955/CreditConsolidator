@@ -5,7 +5,7 @@ import { useCards } from '../context/CardContext';
 import { formatCurrency } from '../utils/mockData';
 
 const MakePaymentPage: React.FC = () => {
-  const { cards, makePayment } = useCards();
+  const { cards, makePayment, distributeAmount } = useCards();
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<'consolidated' | 'individual'>('consolidated');
@@ -46,25 +46,66 @@ const MakePaymentPage: React.FC = () => {
     }
   }, [cards, location.state]);
   
+  // const handleConsolidatedAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const amount = parseFloat(e.target.value) || 0;
+  //   setTotalAmount(amount);
+    
+  //   // Distribute the amount using the smart algorithm
+  //   if (amount > 0) {
+  //     const { distributeAmount } = useCards();
+  //     const distribution = distributeAmount(amount);
+  //     setCardPayments(distribution);
+  //   } else {
+  //     // Zero out all payments
+  //     const resetPayments = Object.keys(cardPayments).reduce((acc, cardId) => {
+  //       acc[cardId] = 0;
+  //       return acc;
+  //     }, {} as { [cardId: string]: number });
+      
+  //     setCardPayments(resetPayments);
+  //   }
+  // };
+
   const handleConsolidatedAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const amount = parseFloat(e.target.value) || 0;
     setTotalAmount(amount);
-    
-    // Distribute the amount using the smart algorithm
-    if (amount > 0) {
-      const { distributeAmount } = useCards();
-      const distribution = distributeAmount(amount);
-      setCardPayments(distribution);
-    } else {
-      // Zero out all payments
-      const resetPayments = Object.keys(cardPayments).reduce((acc, cardId) => {
-        acc[cardId] = 0;
-        return acc;
-      }, {} as { [cardId: string]: number });
-      
-      setCardPayments(resetPayments);
+
+    if (amount <= 0) {
+      // zero out
+      const reset: { [id: string]: number } = {};
+      cards.forEach(c => (reset[c.id] = 0));
+      setCardPayments(reset);
+      return;
     }
+
+    // 1) cover all minimum dues (or as much as we can)
+    let remaining = amount;
+    const byId: { [id: string]: number } = {};
+    cards.forEach(card => {
+      const payMin = Math.min(card.minimumDue, remaining);
+      byId[card.id] = payMin;
+      remaining -= payMin;
+    });
+
+    // 2) with whatever is left, pay down highest-outstanding balances first
+    cards
+      .slice()                          // copy
+      .sort((a, b) => b.totalDue - a.totalDue)
+      .forEach(card => {
+        if (remaining <= 0) return;
+        const already = byId[card.id];
+        const canPayMore = card.totalDue - already;
+        const extra = Math.min(canPayMore, remaining);
+        byId[card.id] = already + extra;
+        remaining -= extra;
+      });
+
+    setCardPayments(byId);
   };
+
+
+
+
   
   const handleIndividualAmountChange = (cardId: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const amount = e.target.value === '' ? 0 : parseFloat(e.target.value);

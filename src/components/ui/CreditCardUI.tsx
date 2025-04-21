@@ -68,12 +68,12 @@ const CreditCardUI: React.FC<CreditCardUIProps> = ({ card, onPayClick }) => {
         
         {/* Back of the card */}
         <div 
-          className={`card-back absolute w-full h-full bg-white rounded-xl shadow-lg p-5 flex flex-col justify-between 
-                      ${isFlipped ? 'rotate-y-0 opacity-100' : 'rotate-y-180 opacity-0'} 
-                      transition-all duration-700 ease-in-out border-2`}
-          style={{ backfaceVisibility: 'hidden', borderColor: card.color }}
-        >
-          <div className="flex flex-col items-center justify-center h-full">
+  className={`card-back absolute w-full h-full max-h-full bg-white rounded-xl shadow-lg p-5 flex flex-col justify-between 
+              ${isFlipped ? 'rotate-y-0 opacity-100' : 'rotate-y-180 opacity-0'} 
+              transition-all duration-700 ease-in-out border-2 overflow-hidden`}
+  style={{ backfaceVisibility: 'hidden', borderColor: card.color }}
+>
+<div className="flex flex-col items-center justify-center h-full overflow-hidden max-h-[calc(100%-3rem)] px-2 text-center">
             <div className="text-center mb-4">
               <h3 className="font-semibold text-xl" style={{ color: card.color }}>
                 {card.bankName} {card.cardName}
@@ -107,7 +107,7 @@ const CreditCardUI: React.FC<CreditCardUIProps> = ({ card, onPayClick }) => {
                 e.stopPropagation();
                 onPayClick(card.id);
               }}
-              className="w-full py-2 rounded-lg text-white font-medium transition-colors mt-4"
+              className="mt-3 w-full rounded-md bg-blue-600 text-white py-2 font-semibold hover:bg-blue-700 transition"
               style={{ backgroundColor: card.color }}
             >
               Pay Now
