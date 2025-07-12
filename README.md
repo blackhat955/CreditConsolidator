@@ -18,7 +18,7 @@
 
 ---
 
-## 📝 Project Overview
+## Project Overview
 
 This app provides a centralized dashboard for users to:
 
@@ -32,7 +32,7 @@ Built with React, Tailwind CSS, and Context API for state management.
 
 ---
 
-## 🚀 Features
+##  Features
 
 - **Card Management**  
   - Add new credit cards with name, bank, number masking, due dates, and color coding  
@@ -57,7 +57,7 @@ Built with React, Tailwind CSS, and Context API for state management.
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **React** (v18+) with TypeScript  
 - **Tailwind CSS** for utility‑first styling  
